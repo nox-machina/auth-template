@@ -6,6 +6,9 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+//--------------------ROUTES IMPORT--------------------//
+const users = require('../routes/users')
+
 const port = process.env.port || 3000
 
 //middleware
@@ -26,6 +29,6 @@ mongoose.connect(`${process.env.DATABASE}`, {useNewUrlParser: true, useUnifiedTo
 app.use(express.json());
 
 //--------------------ROUTES--------------------//
-
+app.use('/', users);
 
 app.listen(port, () => console.log(`Example app deployed on port ${port}!`))
