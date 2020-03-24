@@ -5,8 +5,9 @@ const jwt = require('jsonwebtoken');
 const uuid = require('uuid/v4');
 
 
-//--------------------MODELS--------------------//
+//--------------------CUSTOM--------------------//
 const User = require('../models/User');
+const verify = require('../middleware/verify');
 
 //--------------------METHODS--------------------//
 const {validateSignup, trimVal, trimCased} = require('../functions/validate');
@@ -77,6 +78,17 @@ router.post('/register', async (req, res) => {
         res.status(500).send({error: error})
     }
 
+})
+
+//--------------------TEST GET REQUEST--------------------//
+router.get('/test', verify, async (req, res) => {
+    try {
+        const user = await (await User.findById(req.params.id))
+        res.send(user);
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
 })
 
 module.exports = router;
